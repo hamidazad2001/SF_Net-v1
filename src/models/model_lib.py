@@ -23,8 +23,8 @@ analysis or custom losses.
 """
 
 import gin.tf
-import interpolator 
-import options as my_options
+from src.models import interpolator 
+from src.utils import options as my_options
 
 import tensorflow as tf
 

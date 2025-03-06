@@ -32,18 +32,23 @@ To debug the training loop on CPU:
 The training output directory will be created at <base_folder>/<label>.
 """
 import os
+import sys
 
-import augmentation_lib
-import data_lib
-import eval_lib
-import metrics_lib
-import model_lib
-import train_lib
+# Add the project root to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from src.data import augmentation_lib
+from src.data import data_lib
+from src.utils import losses
+from src.utils import metrics_lib
+from src.models import model_lib
+from scripts import train_lib
+from scripts import eval_lib
+
 from absl import app
 from absl import flags
 from absl import logging
 import gin.tf
-import losses
 
 # Reduce tensorflow logs to ERRORs only.
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -52,11 +57,11 @@ tf.get_logger().setLevel('ERROR')
 
 
 # _GIN_CONFIG = flags.DEFINE_string('gin_config', 'D:/azadegan/frame-interpolation/US/config/film_net-Style.gin', 'Gin config file.')
-_GIN_CONFIG = flags.DEFINE_string('gin_config', 'D:/azadegan/frame-interpolation/US/config/azadegan_net-Style.gin', 'Gin config file.')
+_GIN_CONFIG = flags.DEFINE_string('gin_config', 'config/azadegan_net-Style.gin', 'Gin config file.')
 # _GIN_CONFIG = flags.DEFINE_string('gin_config', 'D:/azadegan/frame-interpolation/US/config/both_net-Style.gin', 'Gin config file.')
 _LABEL = flags.DEFINE_string('label', 'run0',
                              'Descriptive label for this run.')
-_BASE_FOLDER = flags.DEFINE_string('base_folder', 'D:/azadegan/frame-interpolation/Checkpoint/',
+_BASE_FOLDER = flags.DEFINE_string('base_folder', './Checkpoint/',
                                    'Path to checkpoints/summaries.')
 _MODE = flags.DEFINE_enum('mode', 'gpu', ['cpu', 'gpu'],
                           'Distributed strategy approach.')

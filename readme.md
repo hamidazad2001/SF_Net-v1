@@ -21,6 +21,22 @@ SF_Net is a video frame interpolation system that generates intermediate frames 
   - Learning rate scheduling with exponential decay
   - TensorBoard integration for monitoring progress
 
+## Project Structure
+
+The project is organized into the following directories:
+
+```
+SF_Net-v1/
+├── config/            # Configuration files for different models
+├── docs/              # Documentation files
+├── scripts/           # Training and evaluation scripts
+├── src/               # Source code
+│   ├── data/          # Data loading and augmentation
+│   ├── models/        # Model architectures
+│   └── utils/         # Utility functions
+└── setup.py           # Package installation
+```
+
 ## Setup and Installation
 
 ### Prerequisites
@@ -33,24 +49,28 @@ SF_Net is a video frame interpolation system that generates intermediate frames 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/SF_Net-v1.git
+   git clone https://github.com/hamidazad2001/SF_Net-v1.git
    cd SF_Net-v1
    ```
 
-2. Install the required dependencies:
+2. Install the package in development mode:
    ```bash
-   pip install tensorflow==2.8.0
-   pip install gin-config absl-py
+   python install.py
+   ```
+
+   Or manually:
+   ```bash
+   pip install -e .
    ```
 
 ## Usage
 
 ### Training
 
-To train a model, use the `train.py` script with the appropriate configuration file:
+To train a model, use the train.py script with the appropriate configuration file:
 
 ```bash
-python train.py --gin_config config/film_net-Style.gin --base_folder ./Checkpoint --label training_run
+python scripts/train.py --gin_config config/film_net-Style.gin --base_folder ./Checkpoint --label training_run
 ```
 
 Options:
@@ -61,10 +81,10 @@ Options:
 
 ### Evaluation
 
-To evaluate a trained model, use the `eval.py` script:
+To evaluate a trained model, use the eval.py script:
 
 ```bash
-python eval.py --model_path ./Checkpoint/training_run/saved_model
+python scripts/eval.py --model_path ./Checkpoint/training_run/saved_model
 ```
 
 ### TensorBoard Monitoring
@@ -75,29 +95,29 @@ To monitor training progress, use TensorBoard:
 tensorboard --logdir=Checkpoint
 ```
 
-## Project Structure
+## Code Organization
 
-- **Core Model Files**:
+- **src/models/**: Model architecture components
   - `model_lib.py`: Model creation and initialization
   - `interpolator.py`: Main interpolation logic
   - `feature_extractor.py`: Feature extraction from input images
   - `pyramid_flow_estimator.py`: Flow estimation between frames
   - `fusion.py`: Feature fusion to generate output frames
 
-- **Training & Evaluation**:
-  - `train.py`: Main training script
-  - `train_lib.py`: Training utilities
-  - `eval.py` and `eval_lib.py`: Evaluation scripts
-  - `losses.py`: Loss functions
-  - `metrics_lib.py`: Evaluation metrics
-
-- **Data Handling**:
+- **src/data/**: Data handling
   - `data_lib.py`: Dataset creation and preprocessing
   - `augmentation_lib.py`: Data augmentation for training
 
-- **Utility**:
+- **src/utils/**: Utilities
   - `options.py`: Configuration options
   - `util.py`: Utility functions
+  - `losses.py`: Loss functions
+  - `metrics_lib.py`: Evaluation metrics
+
+- **scripts/**: Scripts for training and evaluation
+  - `train.py`: Main training script
+  - `train_lib.py`: Training utilities
+  - `eval.py` and `eval_lib.py`: Evaluation scripts
 
 ## Architecture
 

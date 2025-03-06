@@ -13,11 +13,11 @@
 # limitations under the License.
 # ==============================================================================
 
-import feature_extractor
-import fusion
-import options
-import pyramid_flow_estimator
-import util
+from src.models import feature_extractor
+from src.models import fusion
+from src.utils import options
+from src.models import pyramid_flow_estimator
+from src.utils import util
 import tensorflow as tf
 
 import gin.tf
