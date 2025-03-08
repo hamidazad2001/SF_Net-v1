@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Copyright 2022 Google LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +26,11 @@ Usage example:
 This will produce a saved model into: <base_folder>/<label>/saved_model
 """
 import os
+import sys
+
+# Add the project root directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from typing import Sequence
 
 from src.models import model_lib

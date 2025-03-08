@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Copyright 2022 Google LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +15,11 @@
 # ==============================================================================
 """Evaluation library for frame interpolation."""
 from typing import Dict, Mapping, Text
+import sys
+import os
+
+# Add the project root directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from absl import logging
 import tensorflow as tf

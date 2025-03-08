@@ -7,9 +7,9 @@ setup(
     author="Hamid Azadegan",
     author_email="hamidazad2001@example.com",
     url="https://github.com/hamidazad2001/SF_Net-v1",
-    packages=find_packages(),
+    packages=["src", "src.data", "src.models", "src.utils", "scripts"],
     install_requires=[
-        "tensorflow>=2.4.0",
+        "tensorflow",
         "gin-config",
         "absl-py",
         "tensorflow-addons",

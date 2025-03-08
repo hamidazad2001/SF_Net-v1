@@ -34,9 +34,10 @@ The training output directory will be created at <base_folder>/<label>.
 import os
 import sys
 
-# Add the project root to the Python path
+# Add the project root directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import tensorflow as tf
 from src.data import augmentation_lib
 from src.data import data_lib
 from src.utils import losses
@@ -52,7 +53,6 @@ import gin.tf
 
 # Reduce tensorflow logs to ERRORs only.
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-import tensorflow as tf  # pylint: disable=g-import-not-at-top
 tf.get_logger().setLevel('ERROR')
 
 

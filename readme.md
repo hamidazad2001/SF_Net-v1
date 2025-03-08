@@ -1,168 +1,154 @@
-# SF_Net: Frame Interpolation Neural Network
+# SF_Net: Frame Interpolation Network
 
-SF_Net is a video frame interpolation system that generates intermediate frames between two existing frames, useful for slow-motion video generation, frame rate conversion, and video enhancement. This project implements multiple neural network architectures for high-quality frame interpolation.
-
-## Features
-
-- **Multiple model architectures**:
-  - **FilmNet**: A pyramid-based architecture using feature extraction, flow estimation, and fusion
-  - **AzadeganNet**: A 3D convolution-based approach for frame interpolation
-  - **BothNet**: A hybrid approach combining both architectures for improved performance
-
-- **Advanced interpolation techniques**:
-  - Multi-scale feature extraction with pyramid levels
-  - Bidirectional flow estimation between frames
-  - Feature warping using predicted flows
-  - Sophisticated feature fusion mechanisms
-
-- **Comprehensive training framework**:
-  - Configurable training options via Gin
-  - Advanced data augmentation during training
-  - Learning rate scheduling with exponential decay
-  - TensorBoard integration for monitoring progress
+SF_Net (Style-aware Frame interpolation Network) is an advanced neural network model for video frame interpolation, designed to generate intermediate frames between existing video frames. This creates smoother motion in videos by effectively increasing the frame rate.
 
 ## Project Structure
 
-The project is organized into the following directories:
+```
+SF_Net/
+├── config/                    # Model configuration files
+│   ├── azadegan_net-Style.gin # Main model configuration
+│   └── ...                    # Other configuration variants
+├── scripts/                   # Evaluation and training scripts
+│   ├── eval.py                # Main evaluation script using gin config
+│   ├── eval1.py               # Alternative evaluation script with custom datasets
+│   └── ...                    # Other utility scripts
+├── saved_model/               # Pre-trained TensorFlow model directory
+├── src/                       # Source code
+│   ├── data/                  # Data loading and processing
+│   ├── models/                # Model architecture definitions
+│   └── utils/                 # Utility functions and metrics
+└── README.md                  # This file
+```
+
+## Model Details
+
+SF_Net uses a specialized architecture based on a pyramid design for frame interpolation:
+
+- **Model Type**: azadegan_net (variant of FILM-Net)
+- **Architecture**: 7-level pyramid with 5 fusion levels and 3 specialized levels
+- **Loss Functions**: Combination of L1 (pixel), VGG (perceptual), and Style losses
+- **Input**: Two consecutive video frames
+- **Output**: Intermediate frame(s) at specified time step(s)
+
+## Requirements
+
+### System Requirements
+
+- **Anaconda Python 3.9**
+- **CUDA Toolkit 11.2.1**
+- **cuDNN 8.1.0**
+
+### Dependencies
 
 ```
-SF_Net-v1/
-├── config/            # Configuration files for different models
-├── docs/              # Documentation files
-├── scripts/           # Training and evaluation scripts
-├── src/               # Source code
-│   ├── data/          # Data loading and augmentation
-│   ├── models/        # Model architectures
-│   └── utils/         # Utility functions
-└── setup.py           # Package installation
+tensorflow==2.6.2  # Includes tensorflow-gpu
+tensorflow-datasets==4.4.0
+tensorflow-addons==0.15.0
+absl-py==0.12.0
+gin-config==0.5.0
+parameterized==0.8.1
+mediapy==1.0.3
+scikit-image==0.19.1
+apache-beam==2.34.0
+google-cloud-bigquery-storage==1.1.0  # Suppresses a harmless error from beam
+natsort==8.1.0
+gdown==4.5.4
+tqdm==4.64.1
 ```
 
-## Setup and Installation
-
-### Prerequisites
-
-- Python 3.7 or higher
-- TensorFlow 2.4 or higher
-- CUDA and cuDNN for GPU acceleration (recommended)
-
-### Installation
+## Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/hamidazad2001/SF_Net-v1.git
-   cd SF_Net-v1
+   git clone https://github.com/username/SF_Net.git
+   cd SF_Net
    ```
 
-2. Install the package in development mode:
+2. Install dependencies:
    ```bash
-   python install.py
+   pip install -r requirements.txt
    ```
 
-   Or manually:
-   ```bash
-   pip install -e .
-   ```
+3. Ensure the model paths in scripts/eval.py and scripts/eval1.py match your system setup.
 
-## Usage
+## Datasets
 
-### Training
+### Training Dataset
 
-To train a model, use the train.py script with the appropriate configuration file:
+- **Vimeo-90K**: Main training dataset used for model training
 
-```bash
-python scripts/train.py --gin_config config/film_net-Style.gin --base_folder ./Checkpoint --label training_run
-```
+### Test Datasets
 
-Options:
-- `--gin_config`: Path to the Gin configuration file (options: `film_net-Style.gin`, `azadegan_net-Style.gin`, `both_net-Style.gin`)
-- `--base_folder`: Path to save checkpoints and summaries
-- `--label`: Descriptive label for this training run
-- `--mode`: Distributed strategy approach (`cpu` or `gpu`)
+- **Vimeo-90K**: Standard benchmark for video frame interpolation
+- **Middlebury-Other**: Dataset with complex motions
+- **UCF101**: Action recognition dataset used for evaluation
+- **Xiph**: High-resolution video dataset
+- **SNU-FILM**: Dataset with varying frame rates
 
-### Evaluation
+## Running the Model
 
-To evaluate a trained model, use the eval.py script:
+### Using the Original Evaluation Script
+
+This script uses the dataset paths specified in the gin configuration:
 
 ```bash
-python scripts/eval.py --model_path ./Checkpoint/training_run/saved_model
+python scripts/eval.py
 ```
 
-### TensorBoard Monitoring
+### Using the Alternative Evaluation Script
 
-To monitor training progress, use TensorBoard:
+This script allows specifying custom evaluation datasets:
 
 ```bash
-tensorboard --logdir=Checkpoint
+python scripts/eval1.py
 ```
 
-## Code Organization
+### Path Configuration
 
-- **src/models/**: Model architecture components
-  - `model_lib.py`: Model creation and initialization
-  - `interpolator.py`: Main interpolation logic
-  - `feature_extractor.py`: Feature extraction from input images
-  - `pyramid_flow_estimator.py`: Flow estimation between frames
-  - `fusion.py`: Feature fusion to generate output frames
+Both evaluation scripts have the following paths that should be verified or modified to match your system:
 
-- **src/data/**: Data handling
-  - `data_lib.py`: Dataset creation and preprocessing
-  - `augmentation_lib.py`: Data augmentation for training
+```python
+BASE_FOLDER = 'D:/azadegan/frame-interpolation/Checkpoint'
+LABEL = 'run0'
+EVAL_FOLDER = os.path.join(BASE_FOLDER, LABEL, 'eval')
+SAVED_MODEL_FOLDER = os.path.join(BASE_FOLDER, LABEL, 'saved_model')
+GIN_CONFIG = 'D:/azadegan/frame-interpolation/US/config/azadegan_net-Style.gin'
+```
 
-- **src/utils/**: Utilities
-  - `options.py`: Configuration options
-  - `util.py`: Utility functions
-  - `losses.py`: Loss functions
-  - `metrics_lib.py`: Evaluation metrics
+In eval1.py, the dataset paths are additionally configured:
 
-- **scripts/**: Scripts for training and evaluation
-  - `train.py`: Main training script
-  - `train_lib.py`: Training utilities
-  - `eval.py` and `eval_lib.py`: Evaluation scripts
+```python
+EVAL_FILES = ['D:/azadegan/frame-interpolation/datasets/eval_dataset@10']
+EVAL_NAMES = ['eval_dataset']
+```
 
-## Architecture
+## Troubleshooting
 
-### FilmNet Architecture
+### Common Issues
 
-The FilmNet architecture uses a pyramid-based approach:
-1. Feature extraction at multiple scales forming a feature pyramid
-2. Flow estimation between frames using the feature pyramids
-3. Feature warping using the predicted flows
-4. Feature fusion to generate the interpolated frame
+1. **TensorFlow Import Error**: Make sure TensorFlow and its dependencies are correctly installed for your Python version.
 
-### AzadeganNet Architecture
+2. **GPU Memory Error**: If you encounter GPU memory errors, try reducing the batch size in the evaluation scripts.
 
-The AzadeganNet architecture uses 3D convolutions to process the input frames as a 3D volume, directly learning the interpolation function from the spatial-temporal data.
+3. **File Not Found Errors**: Verify all file paths match your system setup, especially the model paths and dataset locations.
 
-### BothNet Architecture
+4. **TensorFlow Addons Missing**: Install TensorFlow Addons with the appropriate version for your TensorFlow installation.
 
-BothNet combines the strengths of both FilmNet and AzadeganNet by fusing their outputs to leverage both pyramid-based flow prediction and 3D convolution approaches.
+### Debug Options
 
-## Configuration
-
-Model and training configurations are handled through Gin config files located in the `config/` directory:
-- `film_net-Style.gin`: Configuration for FilmNet model
-- `azadegan_net-Style.gin`: Configuration for AzadeganNet model
-- `both_net-Style.gin`: Configuration for BothNet model
+- Both evaluation scripts include detailed logging to help diagnose issues.
+- Check the console output for error messages and file path issues.
+- Ensure all necessary directories exist before running the scripts.
 
 ## Citation
 
-If you use this code in your research, please cite:
-
+Cite as: 
 ```
-@article{SF_Net,
-  title={SF_Net: Frame Interpolation Neural Network},
-  author={Hamid Azadegan},
-  journal={arXiv preprint},
-  year={2023}
-}
+Hamid Azadegan, Seyed Aliasghar Beheshti Shirazi. SF-Net: Video Frame Interpolation with a 3D Square Funnel Network. TechRxiv. November 12, 2024.
+DOI: 10.36227/techrxiv.173144436.61973129/v1
 ```
 
 ## License
 
 This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
-
-## Acknowledgments
-
-This project builds upon research in neural video frame interpolation, including:
-- FILM: Frame Interpolation for Large Motion
-- Other relevant works in the field of neural frame interpolation

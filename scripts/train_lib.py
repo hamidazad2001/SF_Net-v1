@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Copyright 2022 Google LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-r"""Training library for frame interpolation using distributed strategy."""
 import functools
+import sys
+import os
+
+# Add the project root directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from typing import Any, Callable, Dict, Text, Tuple
 
 from absl import logging
