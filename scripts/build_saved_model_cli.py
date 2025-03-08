@@ -27,7 +27,7 @@ This will produce a saved model into: <base_folder>/<label>/saved_model
 import os
 from typing import Sequence
 
-import model_lib
+from src.models import model_lib
 from absl import app
 from absl import flags
 from absl import logging

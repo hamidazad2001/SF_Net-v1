@@ -15,7 +15,7 @@
 """Various utilities used in the film_net frame interpolator model."""
 from typing import List
 
-import options as Options
+from src.utils import options as Options
 import tensorflow as tf
 import tensorflow_addons.image as tfa_image
 def _relu(x: tf.Tensor) -> tf.Tensor:

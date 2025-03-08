@@ -3,11 +3,11 @@ import tensorflow as tf
 from absl import logging
 import gin
 
-import model_lib
-import data_lib
-import eval_lib
-import metrics_lib
-import train_lib
+from src.models import model_lib
+from src.data import data_lib
+from scripts import eval_lib
+from src.utils import metrics_lib
+from scripts import train_lib
 
 def main():
     BASE_FOLDER = 'D:/azadegan/frame-interpolation/Checkpoint'

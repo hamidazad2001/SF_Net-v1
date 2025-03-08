@@ -42,7 +42,7 @@ uses max-pooling which has a tendency to create checkerboard artifacts.
 
 from typing import List
 
-import options
+from src.utils import options
 import tensorflow as tf
 
 

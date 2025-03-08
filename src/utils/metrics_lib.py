@@ -16,7 +16,7 @@
 
 from typing import Callable, Dict, Text
 
-import losses
+from src.utils import losses
 import tensorflow as tf
 
 

@@ -20,7 +20,7 @@ functions, each of which can be summarized separately.
 """
 from typing import Any, Callable, Dict, List, Mapping, Optional, Tuple
 
-import vgg19_loss as vgg19
+from src.utils import vgg19_loss as vgg19
 import gin.tf
 import numpy as np
 import tensorflow as tf

@@ -6,11 +6,11 @@ from absl import logging
 # uncomment and configure the following line:
 # import gin
 
-import model_lib
-import data_lib
-import eval_lib
-import metrics_lib
-import train_lib  # Used for get_strategy (cpu/gpu)
+from src.models import model_lib
+from src.data import data_lib
+from scripts import eval_lib
+from src.utils import metrics_lib
+from scripts import train_lib  # Used for get_strategy (cpu/gpu)
 
 def main():
     """
