@@ -33,7 +33,7 @@ SF_Net uses a specialized architecture based on a pyramid design for frame inter
 - **Input**: Two consecutive video frames
 - **Output**: Intermediate frame(s) at specified time step(s)
 
-![SF-Net Structure](image.png)
+![SF-Net Structure](image.jpg)
 
 ## Requirements
 
