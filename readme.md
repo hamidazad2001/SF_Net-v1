@@ -4,6 +4,8 @@ SF_Net (Square Funnel Frame interpolation Network) is an advanced neural network
 
 This implementation is based on the paper "FILM: Frame Interpolation for Large Motion" with the GitHub repository at https://github.com/google-research/frame-interpolation.
 
+> **Note:** This project is currently under updating. Some features and documentation may change during this process.
+
 ## Project Structure
 
 ```
