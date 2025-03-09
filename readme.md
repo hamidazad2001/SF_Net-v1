@@ -1,6 +1,8 @@
 # SF_Net: Frame Interpolation Network
 
-SF_Net (Style-aware Frame interpolation Network) is an advanced neural network model for video frame interpolation, designed to generate intermediate frames between existing video frames. This creates smoother motion in videos by effectively increasing the frame rate.
+SF_Net (Square Funnel Frame interpolation Network) is an advanced neural network model for video frame interpolation, designed to generate intermediate frames between existing video frames. This creates smoother motion in videos by effectively increasing the frame rate.
+
+This implementation is based on the paper "FILM: Frame Interpolation for Large Motion" with the GitHub repository at https://github.com/google-research/frame-interpolation.
 
 ## Project Structure
 
@@ -26,10 +28,12 @@ SF_Net/
 SF_Net uses a specialized architecture based on a pyramid design for frame interpolation:
 
 - **Model Type**: azadegan_net (variant of FILM-Net)
-- **Architecture**: 7-level pyramid with 5 fusion levels and 3 specialized levels
+- **Architecture**: The SF-Net model uses two encoders and decoders. The encoder performs three 3D convolutions on all frames and combines them, followed by a 3D transpose convolution with a stride of (4, 1, 1) and average pooling, repeating for up to 6 stages. The decoder reverses these operations, applying 3D convolution and up-sampling, merging with corresponding encoder layers. This process continues through six layers, resulting in a frame of dimensions (W x H x 3) in the seventh layer of the decoder.
 - **Loss Functions**: Combination of L1 (pixel), VGG (perceptual), and Style losses
 - **Input**: Two consecutive video frames
 - **Output**: Intermediate frame(s) at specified time step(s)
+
+![SF-Net Structure](image.png)
 
 ## Requirements
 
