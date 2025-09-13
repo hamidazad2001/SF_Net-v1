@@ -2,9 +2,19 @@
 
 SF_Net (Square Funnel Frame interpolation Network) is an advanced neural network model for video frame interpolation, designed to generate intermediate frames between existing video frames. This creates smoother motion in videos by effectively increasing the frame rate.
 
-This implementation is based on the paper "FILM: Frame Interpolation for Large Motion" with the GitHub repository at https://github.com/google-research/frame-interpolation.
+This implementation is based on our published work (see the [Published Paper](#-published-paper) section below for details).
 
-> **Note:** This project is currently under updating. Some features and documentation may change during this process.
+## 📄 Published Paper
+
+This repository contains the official implementation of the following published paper:
+
+> **H. Azadegan and A.-A. Beheshti Shirazi**,  
+> *SF-Net: Video Frame Interpolation With a 3D Square Funnel Network*,  
+> IET Image Processing, vol. 19, no. 1, e70193, 2025.  
+> [https://doi.org/10.1049/ipr2.70193](https://doi.org/10.1049/ipr2.70193)
+
+
+
 
 ## Project Structure
 
@@ -148,12 +158,19 @@ EVAL_NAMES = ['eval_dataset']
 - Ensure all necessary directories exist before running the scripts.
 
 ## Citation
+If you use this code, please cite the following paper:
 
-Cite as: 
-```
-Hamid Azadegan, Seyed Aliasghar Beheshti Shirazi. SF-Net: Video Frame Interpolation with a 3D Square Funnel Network. TechRxiv. November 12, 2024.
-DOI: 10.36227/techrxiv.173144436.61973129/v1
-```
+```bibtex
+@article{Azadegan2025SFNet,
+  author  = {Azadegan, Hamid and Beheshti Shirazi, Ali-Asghar},
+  title   = {SF-Net: Video Frame Interpolation With a 3D Square Funnel Network},
+  journal = {IET Image Processing},
+  year    = {2025},
+  volume  = {19},
+  number  = {1},
+  pages   = {e70193},
+  doi     = {10.1049/ipr2.70193}
+}
 
 ## License
 
