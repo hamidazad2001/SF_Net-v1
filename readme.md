@@ -171,6 +171,7 @@ If you use this code, please cite the following paper:
   pages   = {e70193},
   doi     = {10.1049/ipr2.70193}
 }
+```
 
 ## License
 
